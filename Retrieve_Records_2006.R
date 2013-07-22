@@ -85,4 +85,4 @@ Other_Diagnosis_5, Other_Diagnosis_6, Other_Diagnosis_7, Other_Diagnosis_8, Othe
 Other_Diagnosis_10, Other_Diagnosis_11, Other_Diagnosis_12, Other_Diagnosis_13, Other_Diagnosis_14, 
 Other_Diagnosis_15, RACE, DISPUB92, AGE, DIED, FEMALE, LOS, Year ) 
 
-save(data_2006, file = 'ais_stroke_2007.RData') 
+save(data_2006, file = 'ais_stroke_2006.RData') 
