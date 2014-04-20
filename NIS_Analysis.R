@@ -738,3 +738,112 @@ dimnames(M) <- list(gender = c("HIV + ","HIV -"),
 (Xsq <- chisq.test(M, correct = TRUE)) 
 
 
+
+###############################################################################################
+###############################################################################################
+## Revisions for The European Journal of Neurology April 20, 2014 
+###############################################################################################
+###############################################################################################
+
+
+###############################################################################################
+## ICD-9 Codes for selected opporuntistic infections 
+###############################################################################################
+
+op.inf<- c(10:18, 13, 5472, 70, 707, 942, 1175, 1173, 320, 321, 3212, 3218, 322, 323, 324, 421)
+
+###############################################################################################
+## ICD-9 Codes for post-thrombolysis intracranial hemorrhage  
+###############################################################################################
+
+post.hem <- c(430, 431, 432)
+
+###############################################################################################
+## ICD-9 Codes for post-thrombolysis intracranial hemorrhage  
+###############################################################################################
+
+op.inf.status <- matrix(0, dim(data_over_16[,3:17])[1], length(op.inf))
+
+for(i in 1:length(op.inf)){
+	op.inf.status[,i] <- apply(data_over_16[,3:17], 1,  function(x) sum(grepl(paste("^+", op.inf[i], "+$", sep = ''), x))) 
+	print(i)
+}
+
+post.hem.status <- matrix(0, dim(data_over_16[,3:17])[1], length(post.hem))
+
+for(i in 1:length(post.hem)){
+	post.hem.status[,i] <- apply(data_over_16[,3:17], 1,  function(x) sum(grepl(paste("^+", post.hem[i], "+$", sep = ''), x))) 
+	print(i)
+}
+
+colSums(post.hem.status)
+## [1] 0 0 0
+
+## 0 patients with post-thrombolysis intracranial hemorrhage 
+
+colSums(op.inf.status)
+## 0  0  0  0  0  0  0  0  0  0  0  0  0 12  0  0  0  0  0  0  0  0  0  0
+
+op.inf[colSums(op.inf.status) == 12]
+
+## 12 patients with Syphilis Meningitis 
+syphil.meng <- data_over_16[c(op.inf.status[,14] == 1),]
+sum(syphil.meng$hiv)
+# 0 
+sum(syphil.meng$tpa)
+# 0 
+
+
+###############################################################################################
+## Trend across year for IV-TPA use in the HIV and non-HIV groups 
+###############################################################################################
+
+hiv.tpa.percentage <- c(hiv_ais_tpa_totals/hiv_ais_totals) * 100 
+no.hiv.tpa.percentage <- c(no_hiv_ais_tpa_totals/c(ais_totals - hiv_ais_totals)) * 100
+year <- c(2006, 2007, 2008, 2009, 2010)
+
+fit.no.hiv <- lm(no.hiv.tpa.percentage ~ year)
+fit.hiv <- lm(hiv.tpa.percentage ~ year)
+
+summary(fit.no.hiv)
+
+## Call:
+## lm(formula = no.hiv.tpa.percentage ~ year)
+
+## Residuals:
+##       1        2        3        4        5 
+## 0.13092 -0.04668 -0.15942 -0.06479  0.13997 
+
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)   
+##(Intercept) -731.80005   95.96513  -7.626  0.00468 **
+##year           0.36547    0.04779   7.647  0.00464 **
+##---
+##Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+##Residual standard error: 0.1511 on 3 degrees of freedom
+##Multiple R-squared: 0.9512,	Adjusted R-squared: 0.9349 
+##F-statistic: 58.48 on 1 and 3 DF,  p-value: 0.004644 
+
+
+summary(fit.hiv)
+
+## Call:
+## lm(formula = hiv.tpa.percentage ~ year)
+
+## Residuals:
+##      1       2       3       4       5 
+## 0.4983 -0.1997 -0.5688 -0.2564  0.5267 
+
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) -1550.1821   358.2523  -4.327   0.0228 *
+## year            0.7731     0.1784   4.333   0.0227 *
+## ---
+## Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+## Residual standard error: 0.5642 on 3 degrees of freedom
+## Multiple R-squared: 0.8622,	Adjusted R-squared: 0.8163 
+## F-statistic: 18.77 on 1 and 3 DF,  p-value: 0.02267 
+
+
