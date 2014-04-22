@@ -750,49 +750,13 @@ dimnames(M) <- list(gender = c("HIV + ","HIV -"),
 ## ICD-9 Codes for selected opporuntistic infections 
 ###############################################################################################
 
-op.inf<- c(10:18, 13, 5472, 70, 707, 942, 1175, 1173, 320, 321, 3212, 3218, 322, 323, 324, 421)
+op.inf<- c(10:18, 5472, 70, 707, 942, 1175, 1173, 320, 321, 3212, 3218, 322, 323, 324, 421)
 
 ###############################################################################################
 ## ICD-9 Codes for post-thrombolysis intracranial hemorrhage  
 ###############################################################################################
 
 post.hem <- c(430, 431, 432)
-
-###############################################################################################
-## ICD-9 Codes for post-thrombolysis intracranial hemorrhage  
-###############################################################################################
-
-op.inf.status <- matrix(0, dim(data_over_16[,3:17])[1], length(op.inf))
-
-for(i in 1:length(op.inf)){
-	op.inf.status[,i] <- apply(data_over_16[,3:17], 1,  function(x) sum(grepl(paste("^+", op.inf[i], "+$", sep = ''), x))) 
-	print(i)
-}
-
-post.hem.status <- matrix(0, dim(data_over_16[,3:17])[1], length(post.hem))
-
-for(i in 1:length(post.hem)){
-	post.hem.status[,i] <- apply(data_over_16[,3:17], 1,  function(x) sum(grepl(paste("^+", post.hem[i], "+$", sep = ''), x))) 
-	print(i)
-}
-
-colSums(post.hem.status)
-## [1] 0 0 0
-
-## 0 patients with post-thrombolysis intracranial hemorrhage 
-
-colSums(op.inf.status)
-## 0  0  0  0  0  0  0  0  0  0  0  0  0 12  0  0  0  0  0  0  0  0  0  0
-
-op.inf[colSums(op.inf.status) == 12]
-
-## 12 patients with Syphilis Meningitis 
-syphil.meng <- data_over_16[c(op.inf.status[,14] == 1),]
-sum(syphil.meng$hiv)
-# 0 
-sum(syphil.meng$tpa)
-# 0 
-
 
 ###############################################################################################
 ## Trend across year for IV-TPA use in the HIV and non-HIV groups 
@@ -845,5 +809,85 @@ summary(fit.hiv)
 ## Residual standard error: 0.5642 on 3 degrees of freedom
 ## Multiple R-squared: 0.8622,	Adjusted R-squared: 0.8163 
 ## F-statistic: 18.77 on 1 and 3 DF,  p-value: 0.02267 
+
+###############################################################################################
+## ICD-9 Codes for post-thrombolysis intracranial hemorrhage  and oportunistic infetions
+###############################################################################################
+
+
+
+op.inf<- c(10:18, 5472, 70, 707, 942, 1175, 1173, 320, 321, 3212, 3218, 322, 323, 324, 421)
+
+op.inf.10 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(10, x, value = TRUE)) 
+op.inf.11 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(11, x, value = TRUE)) 
+op.inf.12 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(12, x, value = TRUE)) 
+op.inf.13 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(13, x, value = TRUE)) 
+op.inf.14 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(14, x, value = TRUE)) 
+op.inf.15 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(15, x, value = TRUE)) 
+op.inf.16 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(16, x, value = TRUE)) 
+op.inf.17 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(17, x, value = TRUE)) 
+op.inf.18 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(18, x, value = TRUE)) 
+op.inf.5472 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(5472, x, value = TRUE)) 
+op.inf.70 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(70, x, value = TRUE)) 
+op.inf.707 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(707, x, value = TRUE)) 
+op.inf.942 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(942, x, value = TRUE)) 
+op.inf.1175 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(1175, x, value = TRUE)) 
+op.inf.1173 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(1173, x, value = TRUE)) 
+op.inf.320 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(320, x, value = TRUE)) 
+op.inf.321 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(321, x, value = TRUE)) 
+op.inf.3212 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(3212, x, value = TRUE)) 
+op.inf.3218 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(3218, x, value = TRUE)) 
+op.inf.322 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(322, x, value = TRUE)) 
+op.inf.323 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(323, x, value = TRUE)) 
+op.inf.324 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(324, x, value = TRUE)) 
+op.inf.421 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(421, x, value = TRUE)) 
+
+table(unlist(op.inf.10))
+table(unlist(op.inf.11))
+table(unlist(op.inf.12))
+table(unlist(op.inf.13))
+table(unlist(op.inf.14))
+table(unlist(op.inf.15))
+table(unlist(op.inf.16))
+table(unlist(op.inf.17))
+table(unlist(op.inf.18))
+table(unlist(op.inf.5472))
+table(unlist(op.inf.70))
+table(unlist(op.inf.707))
+table(unlist(op.inf.942))
+table(unlist(op.inf.1175))
+table(unlist(op.inf.1173))
+table(unlist(op.inf.320))
+table(unlist(op.inf.321))
+table(unlist(op.inf.3212))
+table(unlist(op.inf.3218))
+table(unlist(op.inf.322))
+table(unlist(op.inf.323))
+table(unlist(op.inf.324))
+table(unlist(op.inf.421))
+
+
+post.hem <- c(430, 431, 432)
+post.hem.status.430 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep("430", x, value = TRUE)) 
+table(unlist(post.hem.status.430))
+##1430  30430 3430  34430 37430 430   4430  46430 53430 5430  57430 64303 71430 
+##    5    65    17   412  1469  3462  1171    16     1     1    42     3    52 
+##74300 75430 79430 8430  94300 94301 94303 94305 94309 94430 V430  
+##    8     3   123     1     2     5     1     2     1     7   151 
+
+post.hem.status.431 <- apply(data_over_16[,3:17], 1,  function(x) grep("431", x, value = TRUE)) 
+table(unlist(post.hem.status.431))
+##1431  30431 3431  34431 37431 431   4431  46431 57431 64313 66431 71431 75431 
+##   21    63    52    40    77  7698    77     4    39     1     1     2     5 
+##79431 80431 94310 94311 94313 94431 V431  
+## 3775     1     2     5     1     2   757 
+
+
+post.hem.status.432 <- apply(data_over_16[,3:17], 1,  function(x) grep("432", x, value = TRUE)) 
+table(unlist(post.hem.status.432))
+## 30432 3432  34432 37432 4320  4321  4329  44321 44322 44323 44324 44329 67432 
+##     3    26    36     1    68  2227   781  1981   184    28  1563   362     5 
+## 74320 80432 94320 94321 94322 94323 94325 94329 94432 V4321 V4322 
+##    7     1    10    15     5     6     5     4     1    61     7 
 
 
