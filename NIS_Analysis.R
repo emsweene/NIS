@@ -875,6 +875,20 @@ table(unlist(post.hem.status.430))
 ##74300 75430 79430 8430  94300 94301 94303 94305 94309 94430 V430  
 ##    8     3   123     1     2     5     1     2     1     7   151 
 
+post.hem.status.430.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "430") 
+post.hem.status.430.index[is.na(post.hem.status.430.index)] <- FALSE
+ind.430 <- colSums(post.hem.status.430.index)
+ind.430[ind.430 >= 1] <- 1
+ind.430.data <- data_over_16[ind.430 == 1,]
+
+table(ind.430.data$tpa, ind.430.data$hiv)
+   
+##       0    1
+##  0 3165   14
+##  1  278    1
+  
+chisq.test(table(ind.430.data$tpa, ind.430.data$hiv))
+
 post.hem.status.431 <- apply(data_over_16[,3:17], 1,  function(x) grep("431", x, value = TRUE)) 
 table(unlist(post.hem.status.431))
 ##1431  30431 3431  34431 37431 431   4431  46431 57431 64313 66431 71431 75431 
@@ -882,6 +896,18 @@ table(unlist(post.hem.status.431))
 ##79431 80431 94310 94311 94313 94431 V431  
 ## 3775     1     2     5     1     2   757 
 
+post.hem.status.431.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "431") 
+post.hem.status.431.index[is.na(post.hem.status.431.index)] <- FALSE
+ind.431 <- colSums(post.hem.status.431.index)
+ind.431[ind.431 >= 1] <- 1
+ind.431.data <- data_over_16[ind.431 == 1,]
+
+table(ind.431.data$tpa, ind.431.data$hiv)
+   
+##       0    1
+##  0 6697   16
+##  1  976    1
+chisq.test(table(ind.431.data$tpa, ind.431.data$hiv))
 
 post.hem.status.432 <- apply(data_over_16[,3:17], 1,  function(x) grep("432", x, value = TRUE)) 
 table(unlist(post.hem.status.432))
@@ -890,4 +916,90 @@ table(unlist(post.hem.status.432))
 ## 74320 80432 94320 94321 94322 94323 94325 94329 94432 V4321 V4322 
 ##    7     1    10    15     5     6     5     4     1    61     7 
 
+post.hem.status.432.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "4320") 
+post.hem.status.432.index[is.na(post.hem.status.432.index)] <- FALSE
+ind.432 <- colSums(post.hem.status.432.index)
+ind.432[ind.432 >= 1] <- 1
 
+post.hem.status.4321.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "4321") 
+post.hem.status.4321.index[is.na(post.hem.status.4321.index)] <- FALSE
+ind.4321 <- colSums(post.hem.status.4321.index)
+ind.4321[ind.4321 >= 1] <- 1
+
+ind.432 <- ind.432 + ind.4321 
+ind.432[ind.432 >= 1] <- 1
+
+ind.432.data <- data_over_16[ind.432 == 1,]
+
+table(ind.432.data$tpa, ind.432.data$hiv)
+   
+       0    1
+  0 2242    5
+  1   37    0
+
+chisq.test(table(ind.432.data$tpa, ind.432.data$hiv))
+
+
+ind <- ind.432 + ind.431 + ind.430
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+   
+        0     1
+  0 11680    35
+  1  1250     2
+  
+chisq.test(table(ind.data$tpa, ind.data$hiv))
+
+table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1])
+   
+##        0     1
+##  0 18085  1250
+##  1    60     2
+## chisq(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1]))
+## Error: could not find function "chisq"
+## chisq.test(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1]))
+##
+##	Pearson's Chi-squared test with Yates' continuity correction
+##
+##data:  table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa ==      1]) 
+##X-squared = 0.6045, df = 1, p-value = 0.4369
+##
+##Warning message:
+##In chisq.test(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa ==  :
+##  Chi-squared approximation may be incorrect
+
+
+
+op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1003") 
+op.index[is.na(op.index)] <- FALSE
+op.index <- colSums(op.index)
+op.index[op.index >= 1] <- 1
+op.index.01003 <- op.index
+
+op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1006") 
+op.index[is.na(op.index)] <- FALSE
+op.index <- colSums(op.index)
+op.index.01006 <- op.index
+
+op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1081") 
+op.index[is.na(op.index)] <- FALSE
+op.index <- colSums(op.index)
+op.index.01081 <- op.index
+
+op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1090") 
+op.index[is.na(op.index)] <- FALSE
+op.index <- colSums(op.index)
+op.index.01090 <- op.index
+
+op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1093") 
+op.index[is.na(op.index)] <- FALSE
+op.index <- colSums(op.index)
+op.index.01093 <- op.index
+
+op.index.10 <- op.index.01003 + op.index.01006 + op.index.01081 + op.index.01090 + op.index.01093
+op.index.10[op.index.10 >= 1] <- 1
+
+table(data_over_16$hiv[op.index.10 >= 1])
+## 0 1 
+## 4 1 
