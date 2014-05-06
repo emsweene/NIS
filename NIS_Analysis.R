@@ -816,69 +816,9 @@ summary(fit.hiv)
 
 
 
-op.inf<- c(10:18, 5472, 70, 707, 942, 1175, 1173, 320, 321, 3212, 3218, 322, 323, 324, 421)
-
-op.inf.10 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(10, x, value = TRUE)) 
-op.inf.11 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(11, x, value = TRUE)) 
-op.inf.12 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(12, x, value = TRUE)) 
-op.inf.13 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(13, x, value = TRUE)) 
-op.inf.14 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(14, x, value = TRUE)) 
-op.inf.15 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(15, x, value = TRUE)) 
-op.inf.16 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(16, x, value = TRUE)) 
-op.inf.17 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(17, x, value = TRUE)) 
-op.inf.18 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(18, x, value = TRUE)) 
-op.inf.5472 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(5472, x, value = TRUE)) 
-op.inf.70 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(70, x, value = TRUE)) 
-op.inf.707 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(707, x, value = TRUE)) 
-op.inf.942 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(942, x, value = TRUE)) 
-op.inf.1175 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(1175, x, value = TRUE)) 
-op.inf.1173 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(1173, x, value = TRUE)) 
-op.inf.320 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(320, x, value = TRUE)) 
-op.inf.321 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(321, x, value = TRUE)) 
-op.inf.3212 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(3212, x, value = TRUE)) 
-op.inf.3218 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(3218, x, value = TRUE)) 
-op.inf.322 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(322, x, value = TRUE)) 
-op.inf.323 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(323, x, value = TRUE)) 
-op.inf.324 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(324, x, value = TRUE)) 
-op.inf.421 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep(421, x, value = TRUE)) 
-
-table(unlist(op.inf.10))
-table(unlist(op.inf.11))
-table(unlist(op.inf.12))
-table(unlist(op.inf.13))
-table(unlist(op.inf.14))
-table(unlist(op.inf.15))
-table(unlist(op.inf.16))
-table(unlist(op.inf.17))
-table(unlist(op.inf.18))
-table(unlist(op.inf.5472))
-table(unlist(op.inf.70))
-table(unlist(op.inf.707))
-table(unlist(op.inf.942))
-table(unlist(op.inf.1175))
-table(unlist(op.inf.1173))
-table(unlist(op.inf.320))
-table(unlist(op.inf.321))
-table(unlist(op.inf.3212))
-table(unlist(op.inf.3218))
-table(unlist(op.inf.322))
-table(unlist(op.inf.323))
-table(unlist(op.inf.324))
-table(unlist(op.inf.421))
-
-
-post.hem <- c(430, 431, 432)
-post.hem.status.430 <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) grep("430", x, value = TRUE)) 
-table(unlist(post.hem.status.430))
-##1430  30430 3430  34430 37430 430   4430  46430 53430 5430  57430 64303 71430 
-##    5    65    17   412  1469  3462  1171    16     1     1    42     3    52 
-##74300 75430 79430 8430  94300 94301 94303 94305 94309 94430 V430  
-##    8     3   123     1     2     5     1     2     1     7   151 
-
-post.hem.status.430.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "430") 
-post.hem.status.430.index[is.na(post.hem.status.430.index)] <- FALSE
-ind.430 <- colSums(post.hem.status.430.index)
-ind.430[ind.430 >= 1] <- 1
+post.hem.status.430.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '430  '))
+post.hem.status.430.index[post.hem.status.430.index >= 1] <- 1
+ind.430 <- post.hem.status.430.index
 ind.430.data <- data_over_16[ind.430 == 1,]
 
 table(ind.430.data$tpa, ind.430.data$hiv)
@@ -889,18 +829,11 @@ table(ind.430.data$tpa, ind.430.data$hiv)
   
 chisq.test(table(ind.430.data$tpa, ind.430.data$hiv))
 
-post.hem.status.431 <- apply(data_over_16[,3:17], 1,  function(x) grep("431", x, value = TRUE)) 
-table(unlist(post.hem.status.431))
-##1431  30431 3431  34431 37431 431   4431  46431 57431 64313 66431 71431 75431 
-##   21    63    52    40    77  7698    77     4    39     1     1     2     5 
-##79431 80431 94310 94311 94313 94431 V431  
-## 3775     1     2     5     1     2   757 
-
-post.hem.status.431.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "431") 
-post.hem.status.431.index[is.na(post.hem.status.431.index)] <- FALSE
-ind.431 <- colSums(post.hem.status.431.index)
-ind.431[ind.431 >= 1] <- 1
+post.hem.status.431.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '431  '))
+post.hem.status.431.index[post.hem.status.431.index >= 1] <- 1
+ind.431 <- post.hem.status.431.index
 ind.431.data <- data_over_16[ind.431 == 1,]
+
 
 table(ind.431.data$tpa, ind.431.data$hiv)
    
@@ -909,33 +842,20 @@ table(ind.431.data$tpa, ind.431.data$hiv)
 ##  1  976    1
 chisq.test(table(ind.431.data$tpa, ind.431.data$hiv))
 
-post.hem.status.432 <- apply(data_over_16[,3:17], 1,  function(x) grep("432", x, value = TRUE)) 
-table(unlist(post.hem.status.432))
-## 30432 3432  34432 37432 4320  4321  4329  44321 44322 44323 44324 44329 67432 
-##     3    26    36     1    68  2227   781  1981   184    28  1563   362     5 
-## 74320 80432 94320 94321 94322 94323 94325 94329 94432 V4321 V4322 
-##    7     1    10    15     5     6     5     4     1    61     7 
+post.hem.status.432.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '432  '))
+post.hem.status.4322.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '4321 '))
+post.hem.status.4329.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '4329 '))
 
-post.hem.status.432.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "4320") 
-post.hem.status.432.index[is.na(post.hem.status.432.index)] <- FALSE
-ind.432 <- colSums(post.hem.status.432.index)
-ind.432[ind.432 >= 1] <- 1
-
-post.hem.status.4321.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "4321") 
-post.hem.status.4321.index[is.na(post.hem.status.4321.index)] <- FALSE
-ind.4321 <- colSums(post.hem.status.4321.index)
-ind.4321[ind.4321 >= 1] <- 1
-
-ind.432 <- ind.432 + ind.4321 
-ind.432[ind.432 >= 1] <- 1
-
+ind.432 <- c(post.hem.status.432.index + post.hem.status.4322.index  + post.hem.status.4329.index )
+ind.432 [ind.432  >= 1] <- 1
 ind.432.data <- data_over_16[ind.432 == 1,]
 
+
 table(ind.432.data$tpa, ind.432.data$hiv)
-   
-       0    1
-  0 2242    5
-  1   37    0
+
+##       0    1
+##  0 2856    7
+##  1  140    0
 
 chisq.test(table(ind.432.data$tpa, ind.432.data$hiv))
 
@@ -945,61 +865,194 @@ ind[ind >= 1] <- 1
 ind.data <- data_over_16[ind == 1,]
 table(ind.data$tpa, ind.data$hiv)
    
-        0     1
-  0 11680    35
-  1  1250     2
+##        0     1
+##  0 12271    37
+##  1  1351     2
   
-chisq.test(table(ind.data$tpa, ind.data$hiv))
+
 
 table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1])
    
-##        0     1
-##  0 18085  1250
+##                 0     1
+##  0 17984  1351
 ##  1    60     2
-## chisq(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1]))
-## Error: could not find function "chisq"
-## chisq.test(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1]))
-##
-##	Pearson's Chi-squared test with Yates' continuity correction
-##
-##data:  table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa ==      1]) 
-##X-squared = 0.6045, df = 1, p-value = 0.4369
-##
+
+chisq.test(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa == 1]))
+
+##		Pearson's Chi-squared test with Yates' continuity correction
+
+##data:  table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa ==      ##1]) 
+##X-squared = 0.8303, df = 1, p-value = 0.3622
+
 ##Warning message:
-##In chisq.test(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa ==  :
+##In chisq.test(table(data_over_16$hiv[data_over_16$tpa == 1], ind[data_over_16$tpa ##==  :
 ##  Chi-squared approximation may be incorrect
 
 
+## 4210 : AC/SUBAC BACT ENDOCARD ## 
 
-op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1003") 
-op.index[is.na(op.index)] <- FALSE
-op.index <- colSums(op.index)
-op.index[op.index >= 1] <- 1
-op.index.01003 <- op.index
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '4210 '))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
 
-op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1006") 
-op.index[is.na(op.index)] <- FALSE
-op.index <- colSums(op.index)
-op.index.01006 <- op.index
+ind.4210 <- ind 
 
-op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1081") 
-op.index[is.na(op.index)] <- FALSE
-op.index <- colSums(op.index)
-op.index.01081 <- op.index
+##        0    1
+##  0 3826   51
+##  1   57    3
 
-op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1090") 
-op.index[is.na(op.index)] <- FALSE
-op.index <- colSums(op.index)
-op.index.01090 <- op.index
 
-op.index <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) as.numeric(x) == "1093") 
-op.index[is.na(op.index)] <- FALSE
-op.index <- colSums(op.index)
-op.index.01093 <- op.index
+##TB## 
+tub <- c('01300', '01301', '01302',  '01303' ,  '01304' ,  '01305',  '01306',  '01310',   '01311',  '01312',  '01313',
+ '01314',  '01315',  '01316',  '01320',  '01321',  '01322',  '01323',  '01324',  '01325',  '01326',  '01330',  '01331',  '01332',  '01333',  '01334',  '01335',  '01336' )
 
-op.index.10 <- op.index.01003 + op.index.01006 + op.index.01081 + op.index.01090 + op.index.01093
-op.index.10[op.index.10 >= 1] <- 1
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% tub))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
 
-table(data_over_16$hiv[op.index.10 >= 1])
-## 0 1 
-## 4 1 
+##     0  1
+##  0 53 13
+
+ind.tub <- ind
+
+
+##MENEGITIS## 
+
+meng <- c('3200 ', '3201 ', '3202 ', '3203 ', '3207 ', '3208 ', '32081','32082', '32089', '3209 ')
+ 
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% meng))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+ind.meng <- ind
+
+##      0   1
+##  0 671  19
+##  1   7   0
+
+
+
+meng2 <- c('3210 ', '3211 ', '3212 ')
+ 
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% meng2))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+ind.meng2 <- ind
+
+
+##      0  1
+##  0 88 75
+##  1  1  0
+
+
+
+
+ ## HERPES ZOSTER MENINGITIS##
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '0530 '))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+##     0 1
+##  0 6 1
+
+ind.0530<- ind
+
+
+
+##ASPERGILLOSIS##
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '1173 '))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+##       0   1
+##  0 201   7
+##  1   2   0
+ind.1173<- ind
+
+
+
+##ENCEPHALITIS NOS##
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '3239 '))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+ind.3239<- ind
+
+##      0   1
+##  0 542  35
+##  1  10   0
+  
+##INTRACRANIAL ABSCESS##
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '3240 '))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+
+##      0   1
+##  0 321   7
+##  1   5   0
+  
+ind.3240<- ind
+
+
+
+
+
+
+##TOXOPLASM MENINGOENCEPH##
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% '1300 '))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+##     0  1
+##  0  2 12
+  
+ind.1300<- ind
+
+##Syph##
+syph <- c('0942 ', '0943 ', '09481')
+
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% syph))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+ind.syph <- ind
+
+     0  1
+  0 13  7
+  
+##Hep carrier## 
+
+ind <- apply(as.matrix(data_over_16[,3:17]), 1,  function(x) sum(as.character(factor(x))  %in% 'V0262'))
+ind[ind >= 1] <- 1
+ind.data <- data_over_16[ind == 1,]
+table(ind.data$tpa, ind.data$hiv)
+
+ind.V0262 <- ind
+
+##       0   1
+##  0 174  21
+##  1   4   3
+
+
+##TOTAL 
+total.ind <- c(ind.4210  +  ind.tub + ind.meng  + ind.meng2  +  ind.0530 + ind.1173 + ind.3239 + ind.3240 + ind.1300 + ind.syph  + ind.V0262)
+total.ind[total.ind >= 1] <- 1
+ind.data <- data_over_16[total.ind == 1,]
+
+table(ind.data$tpa, ind.data$hiv)
+
+##       0    1
+##  0 5644  237
+##  1   83    6
